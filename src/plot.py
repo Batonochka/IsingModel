@@ -42,14 +42,9 @@ def read_data(filename):
     fig, ax = plt.subplots(3,1,figsize=(30,10),sharex='all')
     J = 1
     B = 0
-    print(df["temperature"])
-    print(type(df["temperature"]))
     energy = E(J, df["temperature"])
     momentum = M(J, df["temperature"], B)
     heat_cap = C(J, df["temperature"])
-    print("<---!!!--->")
-    print(momentum)
-    print(type(momentum))
     ax[0].plot(df["temperature"], df["energy"], color='blue', label='numeric')
     ax[0].plot(df["temperature"], energy, color='green', label='analytic')
     ax[0].legend()
@@ -73,7 +68,7 @@ def read_data(filename):
 if __name__ == "__main__":
     spin_file = "Spins.csv"
     energy_file = "Energies.csv"
-    data_file = "systemdata.csv"
+    data_file = "systemdata2d.csv"
     # read_energies(energy_file)
     # read_spins(spin_file)
     read_data(data_file)
