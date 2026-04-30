@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from pathlib import Path
+
+# Определяем корень проекта (папка, где лежат Cargo.toml и src/)
+script_dir = Path(__file__).parent          # .../src
+project_root = script_dir.parent            # .../ (корень)
+release_dir = project_root / "target" / "release"
 
 def C(J, T):
     return (J/T)**2 / np.cosh(J/T)**2
@@ -46,13 +52,13 @@ def read_data(filename):
     momentum = M(J, df["temperature"], B)
     heat_cap = C(J, df["temperature"])
     ax[0].plot(df["temperature"], df["energy"], color='blue', label='numeric')
-    ax[0].plot(df["temperature"], energy, color='green', label='analytic')
+    # ax[0].plot(df["temperature"], energy, color='green', label='analytic')
     ax[0].legend()
     ax[1].plot(df["temperature"], df["magnetic_momentum"],color='blue',label='numeric')
-    ax[1].plot(df["temperature"], momentum, color='green', label='analytic')
+    # ax[1].plot(df["temperature"], momentum, color='green', label='analytic')
     ax[1].legend()
     ax[2].plot(df['temperature'], df['heat_capacity'],color='blue',label='numeric')
-    ax[2].plot(df["temperature"], heat_cap, color='green', label='analytic')
+    # ax[2].plot(df["temperature"], heat_cap, color='green', label='analytic')
     ax[2].legend()
     ax[2].set_xlabel("Температура")
     ax[0].set_ylabel("Энергия")
@@ -61,14 +67,17 @@ def read_data(filename):
     ax[0].grid(visible=True, which='both')
     ax[1].grid(visible=True, which='both')
     ax[2].grid(visible=True, which='both')
+    plt.savefig(f"{filename}.png")
     plt.show()
-    plt.savefig("simulation.png")
 
 
 if __name__ == "__main__":
-    spin_file = "Spins.csv"
-    energy_file = "Energies.csv"
-    data_file = "systemdata2d.csv"
+    # spin_file = release_dir / "SpinsH=2.0.csv"
+    # energy_file = release_dir / "EnergiesH=2.0.csv"
+    # data_file = "systemdata.csv"
+    # data_file = release_dir / "systemdata22dH=0.0.csv"
     # read_energies(energy_file)
     # read_spins(spin_file)
+    # read_data(data_file)
+    data_file = release_dir / "systemdata32dH=0.5.csv"
     read_data(data_file)
